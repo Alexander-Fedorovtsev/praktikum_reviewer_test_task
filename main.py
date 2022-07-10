@@ -66,11 +66,14 @@ class CashCalculator(Calculator):
     # вместо float короче будет записать число с точкой
     USD_RATE = float(60)  # Курс доллар США.
     EURO_RATE = float(70)  # Курс Евро.
-
+    # обратиться к константам можно через self.USD_RATE self.EURO_RATE
     def get_today_cash_remained(self, currency,
                                 USD_RATE=USD_RATE, EURO_RATE=EURO_RATE):
+        # тут можно обойтись без новой переменной
         currency_type = currency
         cash_remained = self.limit - self.get_today_stats()
+        # можно вывести обработку валюты в отдельную функцию и
+        # описать остальные случаи
         if currency == 'usd':
             cash_remained /= USD_RATE
             currency_type = 'USD'
@@ -78,8 +81,10 @@ class CashCalculator(Calculator):
             cash_remained /= EURO_RATE
             currency_type = 'Euro'
         elif currency_type == 'rub':
+            # cash_remained == 1.00 возвращает булево значение которое далее не используется 
             cash_remained == 1.00
             currency_type = 'руб'
+        # тут можно пустой строкой разделить логические блоки
         if cash_remained > 0:
             return (
                 f'На сегодня осталось {round(cash_remained, 2)} '
@@ -87,11 +92,15 @@ class CashCalculator(Calculator):
             )
         elif cash_remained == 0:
             return 'Денег нет, держись'
+        # elif можно заменить на else
         elif cash_remained < 0:
+            # для консистентности можно вернуть f-строку как в первом случае
+            # если использовать abs() логически станет более понятно
             return 'Денег нет, держись:' \
                    ' твой долг - {0:.2f} {1}'.format(-cash_remained,
                                                      currency_type)
-
+    
+    # зачем переопределять родительский метод если ничего не меняем?
     def get_week_stats(self):
         super().get_week_stats()
 
@@ -99,6 +108,3 @@ class CashCalculator(Calculator):
     дописать закрыв конструкцией if __name__ == "__main__".
     https://pyneng.readthedocs.io/ru/latest/book/11_modules/if_name_main.html
 """
-
-calc = CashCalculator(1000)
-print(calc.EURO_RATE)
