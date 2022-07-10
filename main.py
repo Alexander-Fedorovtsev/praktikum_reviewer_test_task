@@ -8,6 +8,7 @@ import datetime as dt
     https://semakin.dev/2020/06/type_hints/
 """
 class Record:
+    # значение по умолчанию лучше определить через None
     def __init__(self, amount, comment, date=''):
         self.amount = amount
         self.date = (
@@ -27,6 +28,7 @@ class Calculator:
 
     def get_today_stats(self):
         today_stats = 0
+        # именовать переменные в Python принято с маленькой буквы 
         for Record in self.records:
             if Record.date == dt.datetime.now().date():
                 today_stats = today_stats + Record.amount
@@ -36,6 +38,7 @@ class Calculator:
         week_stats = 0
         today = dt.datetime.now().date()
         for record in self.records:
+            # условие можно записать короче, в виде: 0 <= a < 7
             if (
                 (today - record.date).days < 7 and
                 (today - record.date).days >= 0
@@ -46,15 +49,21 @@ class Calculator:
 
 class CaloriesCalculator(Calculator):
     def get_calories_remained(self):  # Получает остаток калорий на сегодня
+        # вместо x можно назвать переменную более понятно, например calories_remained 
         x = self.limit - self.get_today_stats()
         if x > 0:
+            # \ для переноса не используется
             return f'Сегодня можно съесть что-нибудь' \
                    f' ещё, но с общей калорийностью не более {x} кКал'
+        # else тут можно убрать т.к. иначе мы попадаем сюда. 
         else:
+            # скобки можно убрать
             return('Хватит есть!')
 
 
 class CashCalculator(Calculator):
+    # коментарии являются переводом именования констант, можно убрать
+    # вместо float короче будет записать число с точкой
     USD_RATE = float(60)  # Курс доллар США.
     EURO_RATE = float(70)  # Курс Евро.
 
@@ -90,3 +99,6 @@ class CashCalculator(Calculator):
     дописать закрыв конструкцией if __name__ == "__main__".
     https://pyneng.readthedocs.io/ru/latest/book/11_modules/if_name_main.html
 """
+
+calc = CashCalculator(1000)
+print(calc.EURO_RATE)
