@@ -1,6 +1,12 @@
 import datetime as dt
 
-
+""" Не оформлены комментарии к классам и методам, необходимо оформить
+    в виде Docstring.
+    https://www.python.org/dev/peps/pep-0257/
+    
+    Для классов и методов необходимо добавить type annotations.
+    https://semakin.dev/2020/06/type_hints/
+"""
 class Record:
     def __init__(self, amount, comment, date=''):
         self.amount = amount
@@ -79,3 +85,8 @@ class CashCalculator(Calculator):
 
     def get_week_stats(self):
         super().get_week_stats()
+
+""" Не написаны сценарии использования классов (П.3 задания), необходимо
+    дописать закрыв конструкцией if __name__ == "__main__".
+    https://pyneng.readthedocs.io/ru/latest/book/11_modules/if_name_main.html
+"""
